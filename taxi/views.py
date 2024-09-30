@@ -48,7 +48,7 @@ class DriverDetailView(CarDetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["cars"] = self.object.cars.select_related(
+        context["cars"] = self.object.cars.prefetch_related( # optimize query with prefetch_related
             "manufacturer"
         )
         return context
