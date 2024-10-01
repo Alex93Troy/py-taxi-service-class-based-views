@@ -45,10 +45,4 @@ class DriverListView(ListView):
 class DriverDetailView(CarDetailView):
     model = Driver
     template_name = "taxi/driver_detail.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["cars"] = self.object.cars.prefetch_related(
-            "manufacturer"
-        )  # optimize query with prefetch_related
-        return context
+    queryset = Driver.objects.prefetch_related("cars__manufacturer")
